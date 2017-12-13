@@ -5,7 +5,7 @@ services:
     image: jmendiara/prometheus-swarm-discovery:0.2.0
     command: 
       - server
-      - l=debug
+      - -l=debug
     ports:
       - '8080:8080'
     volumes:
