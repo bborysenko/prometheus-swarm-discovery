@@ -184,11 +184,22 @@ func buildLabels(target scrapeTarget) map[string]string {
 	labels := map[string]string{
 		model.JobLabel: joblabel,
 
-		model.MetaLabelPrefix + "swarm_task_name":          fmt.Sprintf("%s.%d", target.Service.Spec.Name, target.Task.Slot),
+		// container_label_com_docker_stack_namespace
+		model.MetaLabelPrefix + "swarm_stack_namespace": string(target.Service.Spec.Labels["com.docker.stack.namespace"]),
+
+		// container_label_com_docker_swarm_task_id
+		// container_label_com_docker_swarm_task_name
+		model.MetaLabelPrefix + "swarm_task_id": target.Task.ID,
+		model.MetaLabelPrefix + "swarm_task_name": fmt.Sprintf("%s.%d.%s", target.Service.Spec.Name, target.Task.Slot, target.Task.ID),
 		model.MetaLabelPrefix + "swarm_task_desired_state": string(target.Task.DesiredState),
 
+		// container_label_com_docker_swarm_service_id
+		// container_label_com_docker_swarm_service_name
+		model.MetaLabelPrefix + "swarm_service_id": target.Service.ID,
 		model.MetaLabelPrefix + "swarm_service_name": target.Service.Spec.Name,
 
+		// container_label_com_docker_swarm_node_id
+		model.MetaLabelPrefix + "swarm_node_id": target.Node.ID,
 		model.MetaLabelPrefix + "swarm_node_hostname": target.Node.Description.Hostname,
 	}
 

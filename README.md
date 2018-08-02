@@ -66,16 +66,20 @@ services:
         prometheus.job: "front-end" # prometheus job name. optional (defaults to service name in the stack eg: stack_front-end)
 ```
 
-## labels
+## Labels
 
 The discovery tool attaches a set of labels to each target that are available during the [relabeling phase](https://prometheus.io/docs/operating/configuration/#<relabel_config>) of the service discovery in Prometheus:
 
-* `__meta_swarm_label_<labelname>`: Labels for the service/tasks ex: `__meta_swarm_label_com_docker_stack_namespace=stack`
-* `__meta_swarm_task_name`: The name of the Docker task. ex: `stack_service.1`
+* `__meta_swarm_stack_namespace`: The name of stack namespace
+* `__meta_swarm_task_id`: The id of the Docker task. ex: `ww3kb7vkc81s1qt4sva0qo3cd`
+* `__meta_swarm_task_name`: The name of the Docker task. ex: `stack_service.1.ww3kb7vkc81s1qt4sva0qo3cd`
 * `__meta_swarm_task_desired_state`: The state of the task. You can filter them in relabeling (see example). ex: `running`
+* `__meta_swarm_service_id`: The id of the Docker service. ex: `k95h1gs2kmc8espiom7s7jg3r`
 * `__meta_swarm_service_name`: The name of the Docker service. ex: `stack_service`
+* `__meta_swarm_node_id`: The id of node where the task is located. ex: `5pj6wnha7ncs7dcx9shtok48f`
 * `__meta_swarm_node_hostname`: The hostname where the task is located. ex: `ip-172-31-8-170.ec2.internal`
-* `job`: As specified in the the label `prometheus.job`; the service name otherwhise ex: `stack_service`
+* `__meta_swarm_label_<labelname>`: Labels for the service/tasks ex: `__meta_swarm_label_com_docker_stack_namespace=stack`
+* `job`: As specified in the the label `prometheus.job`; the service name otherwise ex: `stack_service`
 
 Labels starting with `__` are removed after the relabeling phase, so that these labels will not show up on time series directly.
 
