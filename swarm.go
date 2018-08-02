@@ -187,7 +187,7 @@ func buildLabels(target scrapeTarget) map[string]string {
 		// cAvdisor labels
 		"container_label_com_docker_stack_namespace": string(target.Service.Spec.Labels["com.docker.stack.namespace"]),
 		"container_label_com_docker_swarm_node_id": string(target.Node.ID),
-		"container_label_com_docker_swarm_node_hostnmae": string(target.Node.Description.Hostname),
+		"container_label_com_docker_swarm_node_hostname": string(target.Node.Description.Hostname),
 		"container_label_com_docker_swarm_service_id": string(target.Service.ID),
 		"container_label_com_docker_swarm_service_name": string(target.Service.Spec.Name),
 		"container_label_com_docker_swarm_task_id": string(target.Task.ID),
