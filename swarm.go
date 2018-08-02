@@ -183,7 +183,7 @@ func buildLabels(target scrapeTarget) map[string]string {
 
 	labels := map[string]string{
 		model.JobLabel: joblabel,
-		
+
 		// cAvdisor labels
 		"container_label_com_docker_stack_namespace": string(target.Service.Spec.Labels["com.docker.stack.namespace"]),
 		"container_label_com_docker_swarm_node_id": string(target.Node.ID),
@@ -197,9 +197,11 @@ func buildLabels(target scrapeTarget) map[string]string {
 		model.MetaLabelPrefix + "swarm_node_hostname": target.Node.Description.Hostname,
 	}
 
-	if path, ok := target.Service.Spec.Labels[pathLabel]; ok {
-		labels[model.MetricsPathLabel] = path
-	}
+	// // We don't use this labels in
+	//
+	// if path, ok := target.Service.Spec.Labels[pathLabel]; ok {
+	// 	labels[model.MetricsPathLabel] = path
+	// }
 
 	for k, v := range target.Service.Spec.Labels {
 		labels[strutil.SanitizeLabelName(model.MetaLabelPrefix+"swarm_label_"+k)] = v
