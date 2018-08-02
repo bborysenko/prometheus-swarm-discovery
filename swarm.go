@@ -204,16 +204,20 @@ func buildLabels(target scrapeTarget) map[string]string {
 	// }
 
 	for k, v := range target.Service.Spec.Labels {
-		labels[strutil.SanitizeLabelName(model.MetaLabelPrefix+"swarm_label_"+k)] = v
+		if v != "com.docker.stack.namespace" {
+			// labels[strutil.SanitizeLabelName(model.MetaLabelPrefix+"swarm_label_"+k)] = v
+			labels[strutil.SanitizeLabelName("container_label_com_docker_swarm_service_label_"+k)] = v
+
+		}
 	}
 
-	for k, v := range target.Task.Labels {
-		labels[strutil.SanitizeLabelName(model.MetaLabelPrefix+"swarm_label_"+k)] = v
-	}
-
-	for k, v := range target.Task.Spec.ContainerSpec.Labels {
-		labels[strutil.SanitizeLabelName(model.MetaLabelPrefix+"swarm_label_"+k)] = v
-	}
+	// for k, v := range target.Task.Labels {
+	// 	labels[strutil.SanitizeLabelName(model.MetaLabelPrefix+"swarm_label_"+k)] = v
+	// }
+	//
+	// for k, v := range target.Task.Spec.ContainerSpec.Labels {
+	// 	labels[strutil.SanitizeLabelName(model.MetaLabelPrefix+"swarm_label_"+k)] = v
+	// }
 
 	return labels
 }
